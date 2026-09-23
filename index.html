@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerMap Pro - Elite Student Placement & Career Intelligence Platform</title>
+    <meta name="description" content="A world-class SaaS platform for student career roadmaps, placement readiness analytics, interactive mock interview simulation, and ATS resume auditing.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="app-sidebar">
+            <div class="brand-container">
+                <a href="#" class="brand-logo">
+                    <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <span>CareerMap</span>
+                    <span class="brand-badge">PRO</span>
+                </a>
+            </div>
+
+            <ul class="nav-links">
+                <li class="active" data-target="dashboard">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </li>
+                <li data-target="roadmap">
+                    <i class="fa-solid fa-route"></i>
+                    <span>Career Roadmaps</span>
+                    <span class="nav-pill">6 Paths</span>
+                </li>
+                <li data-target="readiness">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span>Readiness Checklist</span>
+                </li>
+                <li data-target="interview">
+                    <i class="fa-solid fa-brain"></i>
+                    <span>Mock Interview AI</span>
+                    <span class="nav-pill" style="background: rgba(16, 185, 129, 0.2); color:#10b981;">Live</span>
+                </li>
+                <li data-target="planner">
+                    <i class="fa-regular fa-calendar-check"></i>
+                    <span>Study Planner</span>
+                </li>
+                <li data-target="resume">
+                    <i class="fa-solid fa-file-shield"></i>
+                    <span>ATS Resume Auditor</span>
+                </li>
+                <li data-target="profile">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Profile & Goals</span>
+                </li>
+                <li data-target="analytics">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Analytics & Badges</span>
+                </li>
+            </ul>
+
+            <!-- Sidebar User Profile Footer -->
+            <div class="sidebar-user-card">
+                <div class="user-avatar-badge" id="sidebar-avatar">ST</div>
+                <div class="user-info-meta">
+                    <h4 id="sidebar-name">Student User</h4>
+                    <p id="sidebar-role">Software Engineering</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Global Topbar Header -->
+            <header class="topbar">
+                <div class="page-title-group">
+                    <h1 id="page-title">Executive Dashboard</h1>
+                    <p id="page-subtitle">Track your placement journey, competency matrix, and interview readiness.</p>
+                </div>
+                <div class="topbar-controls">
+                    <div class="topbar-pill">
+                        <span class="pulse-dot"></span>
+                        <span id="topbar-readiness-label">Readiness: 65%</span>
+                    </div>
+                    <button id="theme-toggle-btn" class="icon-btn" title="Toggle Theme">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    <button id="quick-add-task-btn" class="btn-primary">
+                        <i class="fa-solid fa-plus"></i> <span>New Task</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Views Container -->
+            <div class="content-wrapper">
+                
+                <!-- ================= 1. DASHBOARD VIEW ================= -->
+                <section id="dashboard" class="view-section active">
+                    <!-- AI Smart Recommendation Banner -->
+                    <div class="ai-recommendation-card">
+                        <div class="ai-icon-sparkle"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                        <div class="ai-rec-content">
+                            <h3>Placement Readiness Intelligence</h3>
+                            <p id="personalized-recommendation">Analyzing your completed competencies and skill gaps to generate high-yield preparation advice...</p>
+                        </div>
+                    </div>
+
+                    <!-- Metrics Grid -->
+                    <div class="dashboard-grid">
+                        <!-- Card 1: Radial Readiness Gauge -->
+                        <div class="glass col-span-3">
+                            <div class="stat-card-header">
+                                <span class="stat-card-title">Placement Score</span>
+                                <div class="stat-card-icon icon-purple"><i class="fa-solid fa-award"></i></div>
+                            </div>
+                            <div class="readiness-gauge-container">
+                                <div class="gauge-svg-wrap">
+                                    <svg class="gauge-svg" viewBox="0 0 140 140">
+                                        <defs>
+                                            <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#6366f1" />
+                                                <stop offset="50%" stop-color="#06b6d4" />
+                                                <stop offset="100%" stop-color="#10b981" />
+                                            </linearGradient>
+                                        </defs>
+                                        <circle class="gauge-bg" cx="70" cy="70" r="58"></circle>
+                                        <circle id="gauge-circle-progress" class="gauge-fill" cx="70" cy="70" r="58"></circle>
+                                    </svg>
+                                    <div class="gauge-inner-text">
+                                        <div class="gauge-score" id="dashboard-progress-value">0%</div>
+                                    </div>
+                                </div>
+                                <span id="readiness-badge" class="readiness-badge-pill badge-novice">Novice</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Tasks & Milestones -->
+                        <div class="glass col-span-3">
+                            <div class="stat-card-header">
+                                <span class="stat-card-title">Completed Tasks</span>
+                                <div class="stat-card-icon icon-cyan"><i class="fa-solid fa-circle-check"></i></div>
+                            </div>
+                            <div class="stat-metric-value" id="stats-tasks-count">0<span style="font-size: 1.2rem; color: var(--text-muted);">/0</span></div>
+                            <p class="stat-subtext"><i class="fa-solid fa-arrow-trend-up" style="color: var(--accent-emerald);"></i> Active roadmap progression</p>
+                        </div>
+
+                        <!-- Card 3: Active Prep Streak -->
+                        <div class="glass col-span-3">
+                            <div class="stat-card-header">
+                                <span class="stat-card-title">Consistency Streak</span>
+                                <div class="stat-card-icon icon-amber"><i class="fa-solid fa-fire"></i></div>
+                            </div>
+                            <div class="stat-metric-value" id="stats-streak-count">0 <span style="font-size: 1.2rem; color: var(--text-muted);">Days</span></div>
+                            <p class="stat-subtext"><i class="fa-solid fa-bolt" style="color: var(--accent-amber);"></i> Daily practice record</p>
+                        </div>
+
+                        <!-- Card 4: Focus Pomodoro Widget -->
+                        <div class="glass col-span-3">
+                            <div class="stat-card-header">
+                                <span class="stat-card-title">Study Sprint</span>
+                                <div class="stat-card-icon icon-rose"><i class="fa-solid fa-stopwatch"></i></div>
+                            </div>
+                            <div class="pomodoro-box">
+                                <div class="pomodoro-time-display" id="timer-display">25:00</div>
+                                <div class="pomodoro-controls">
+                                    <button id="timer-start" class="pomodoro-btn btn-start" title="Start Timer"><i class="fa-solid fa-play"></i></button>
+                                    <button id="timer-pause" class="pomodoro-btn btn-pause" title="Pause"><i class="fa-solid fa-pause"></i></button>
+                                    <button id="timer-reset" class="pomodoro-btn btn-reset" title="Reset"><i class="fa-solid fa-rotate-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 5: Radar Competency Matrix (Chart.js) -->
+                        <div class="glass col-span-6">
+                            <div class="stat-card-header">
+                                <span class="stat-card-title">Competency Radar Matrix</span>
+                                <div class="stat-card-icon icon-purple"><i class="fa-solid fa-chart-line"></i></div>
+                            </div>
+                            <div style="height: 280px; position: relative;">
+                                <canvas id="competencyRadarChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Card 6: Category Breakdown Doughnut (Chart.js) -->
+                        <div class="glass col-span-6">
+                            <div class="stat-card-header">
+                                <span class="stat-card-title">Category Completion Split</span>
+                                <div class="stat-card-icon icon-cyan"><i class="fa-solid fa-chart-pie"></i></div>
+                            </div>
+                            <div style="height: 280px; position: relative;">
+                                <canvas id="categoryDoughnutChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Card 7: Skill Gaps & Actionable Next Steps -->
+                        <div class="glass col-span-6">
+                            <div class="stat-card-header">
+                                <span class="stat-card-title">Identified Skill Gaps & Critical Topics</span>
+                                <div class="stat-card-icon icon-amber"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                            </div>
+                            <ul class="goal-list" id="skill-gap-list" style="list-style: none; display: flex; flex-direction: column; gap: 10px;">
+                                <!-- Populated dynamically -->
+                            </ul>
+                        </div>
+
+                        <!-- Card 8: Recent Activity Log -->
+                        <div class="glass col-span-6">
+                            <div class="stat-card-header">
+                                <span class="stat-card-title">Live Activity Stream</span>
+                                <div class="stat-card-icon icon-emerald"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                            </div>
+                            <ul class="activity-timeline" id="dashboard-history-timeline" style="list-style: none; display: flex; flex-direction: column; gap: 12px;">
+                                <!-- Populated dynamically -->
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= 2. CAREER ROADMAP VIEW ================= -->
+                <section id="roadmap" class="view-section hidden">
+                    <div class="glass roadmap-hero">
+                        <div>
+                            <h2 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 4px;" id="roadmap-title">Software Engineering Pathway</h2>
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">Interactive step-by-step master curriculum tailored to your target job role.</p>
+                        </div>
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <label style="font-size: 0.88rem; font-weight: 600; color: var(--text-muted);">Switch Track:</label>
+                            <select id="roadmap-track-select" class="track-select-pill">
+                                <option value="Software Engineer">Full Stack Software Engineer</option>
+                                <option value="AI & ML Engineer">AI & Machine Learning Engineer</option>
+                                <option value="Data Scientist">Data Scientist & Analytics</option>
+                                <option value="DevOps & Cloud">Cloud & DevOps Architect</option>
+                                <option value="Product Manager">Tech Product Manager</option>
+                                <option value="Cybersecurity">Cybersecurity Specialist</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-tree-wrapper">
+                        <div class="roadmap-flow-container" id="roadmap-nodes-container">
+                            <!-- Dynamic roadmap stages rendered via JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= 3. PLACEMENT READINESS CHECKLIST ================= -->
+                <section id="readiness" class="view-section hidden">
+                    <div class="glass" style="margin-bottom: 24px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+                            <div>
+                                <h2 style="font-size: 1.4rem; font-weight: 800;">Placement Readiness Master Checklist</h2>
+                                <p style="color: var(--text-muted); font-size: 0.88rem;">Track every critical interview topic across DSA, CS Fundamentals, Projects, and Aptitude.</p>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 1.4rem; font-weight: 800; color: var(--accent-cyan);" id="checklist-progress-text">0% Completed</div>
+                            </div>
+                        </div>
+
+                        <!-- Search & Filter Controls -->
+                        <div class="checklist-toolbar">
+                            <input type="text" id="search-task" class="search-input" placeholder="Search tasks, algorithms, or topics...">
+                            <select id="filter-category" class="category-filter-select">
+                                <option value="All">All Categories</option>
+                                <option value="Core Tech & DSA">Core Tech & DSA</option>
+                                <option value="Projects & Profile">Projects & Profile</option>
+                                <option value="Aptitude & Interviews">Aptitude & Interviews</option>
+                                <option value="CS Core & System Design">CS Core & System Design</option>
+                                <option value="Other Goals">Other Goals</option>
+                            </select>
+                            <select id="filter-status" class="category-filter-select">
+                                <option value="All">All Statuses</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                            <select id="filter-priority" class="category-filter-select">
+                                <option value="All">All Priorities</option>
+                                <option value="High">High Priority</option>
+                                <option value="Medium">Medium Priority</option>
+                                <option value="Low">Low Priority</option>
+                            </select>
+                        </div>
+
+                        <!-- Custom Task Creator -->
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--glass-border);">
+                            <input type="text" id="custom-goal-input" class="search-input" placeholder="Add custom topic (e.g., Dynamic Programming 2D Grid)..." style="flex: 2; min-width: 260px;">
+                            <input type="url" id="custom-goal-url" class="search-input" placeholder="Resource link (optional)..." style="flex: 1; min-width: 180px;">
+                            <select id="custom-goal-category" class="category-filter-select">
+                                <option value="Core Tech & DSA">Core Tech & DSA</option>
+                                <option value="Projects & Profile">Projects & Profile</option>
+                                <option value="Aptitude & Interviews">Aptitude & Interviews</option>
+                                <option value="CS Core & System Design">CS Core & System Design</option>
+                                <option value="Other Goals">Other Goals</option>
+                            </select>
+                            <select id="custom-goal-priority" class="category-filter-select">
+                                <option value="High">High Priority</option>
+                                <option value="Medium">Medium Priority</option>
+                                <option value="Low">Low Priority</option>
+                            </select>
+                            <button id="add-goal-btn" class="btn-primary"><i class="fa-solid fa-plus"></i> Add Topic</button>
+                        </div>
+                    </div>
+
+                    <!-- Tasks List Container -->
+                    <div id="dynamic-checklist-grid">
+                        <!-- Dynamically populated tasks grouped by category -->
+                    </div>
+                </section>
+
+                <!-- ================= 4. MOCK INTERVIEW SIMULATOR ================= -->
+                <section id="interview" class="view-section hidden">
+                    <div class="interview-grid">
+                        <!-- Left: Topic Selection & Stats -->
+                        <div class="glass">
+                            <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 16px;"><i class="fa-solid fa-layer-group" style="color: var(--primary-light);"></i> Select Interview Category</h3>
+                            
+                            <div class="interview-category-card active" data-cat="dsa">
+                                <div>
+                                    <h4 style="font-size: 0.95rem; font-weight: 600;">Data Structures & Algorithms</h4>
+                                    <p style="font-size: 0.78rem; color: var(--text-muted);">Arrays, Trees, DP, Graphs, HashMaps</p>
+                                </div>
+                                <i class="fa-solid fa-code" style="color: var(--primary-light);"></i>
+                            </div>
+
+                            <div class="interview-category-card" data-cat="system_design">
+                                <div>
+                                    <h4 style="font-size: 0.95rem; font-weight: 600;">System Design & Architecture</h4>
+                                    <p style="font-size: 0.78rem; color: var(--text-muted);">Scalability, Caching, Load Balancing</p>
+                                </div>
+                                <i class="fa-solid fa-server" style="color: var(--accent-cyan);"></i>
+                            </div>
+
+                            <div class="interview-category-card" data-cat="cs_fundamentals">
+                                <div>
+                                    <h4 style="font-size: 0.95rem; font-weight: 600;">CS Core Fundamentals</h4>
+                                    <p style="font-size: 0.78rem; color: var(--text-muted);">OS, DBMS, Computer Networks, OOP</p>
+                                </div>
+                                <i class="fa-solid fa-database" style="color: var(--accent-purple);"></i>
+                            </div>
+
+                            <div class="interview-category-card" data-cat="behavioral">
+                                <div>
+                                    <h4 style="font-size: 0.95rem; font-weight: 600;">Behavioral & HR (STAR Method)</h4>
+                                    <p style="font-size: 0.78rem; color: var(--text-muted);">Conflict resolution, Leadership, Culture</p>
+                                </div>
+                                <i class="fa-solid fa-comments" style="color: var(--accent-emerald);"></i>
+                            </div>
+
+                            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--glass-border); text-align: center;">
+                                <button id="new-question-btn" class="btn-primary" style="width: 100%;">
+                                    <i class="fa-solid fa-shuffle"></i> Get New Question
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Right: Interview Cockpit -->
+                        <div class="interview-question-cockpit">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span class="tech-tag" id="interview-topic-tag">DATA STRUCTURES</span>
+                                <div class="interview-timer-badge" id="interview-timer"><i class="fa-regular fa-clock"></i> 00:00</div>
+                            </div>
+
+                            <h3 id="interview-question-text" style="font-size: 1.25rem; font-weight: 700; line-height: 1.4;">
+                                How would you detect a cycle in a singly linked list with O(1) extra space?
+                            </h3>
+
+                            <div style="display: flex; gap: 8px;">
+                                <button id="interview-hint-btn" class="btn-outline" style="padding: 6px 12px; font-size: 0.8rem;">
+                                    <i class="fa-solid fa-lightbulb"></i> View Hint
+                                </button>
+                                <button id="interview-reveal-btn" class="btn-outline" style="padding: 6px 12px; font-size: 0.8rem;">
+                                    <i class="fa-solid fa-eye"></i> Show Ideal Answer
+                                </button>
+                            </div>
+
+                            <div id="interview-hint-box" class="model-answer-box hidden" style="border-color: var(--accent-amber); color: var(--accent-amber);">
+                                <strong>💡 Hint:</strong> Think of two runners on a circular track moving at different speeds (Floyd's Cycle-Finding Algorithm).
+                            </div>
+
+                            <div id="interview-answer-box" class="model-answer-box hidden">
+                                <strong>🎯 Recommended Approach:</strong><br>
+                                Use Floyd's Tortoise and Hare algorithm. Initialize two pointers (slow and fast) at the head. Advance slow by 1 step and fast by 2 steps. If slow == fast, a cycle exists. If fast reaches null, no cycle exists. Time complexity O(N), Space complexity O(1).
+                            </div>
+
+                            <div>
+                                <label style="font-size: 0.88rem; font-weight: 600; margin-bottom: 8px; display: block;">Your Scratchpad / Answer Notes:</label>
+                                <textarea id="interview-student-notes" class="interview-textarea" placeholder="Type your algorithmic approach, code snippets, or STAR explanation here..."></textarea>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-size: 0.85rem; color: var(--text-muted);">Self-Rating:</span>
+                                    <div id="interview-rating-stars" style="color: var(--accent-amber); cursor: pointer; font-size: 1.1rem;">
+                                        <i class="fa-regular fa-star" data-rating="1"></i>
+                                        <i class="fa-regular fa-star" data-rating="2"></i>
+                                        <i class="fa-regular fa-star" data-rating="3"></i>
+                                        <i class="fa-regular fa-star" data-rating="4"></i>
+                                        <i class="fa-regular fa-star" data-rating="5"></i>
+                                    </div>
+                                </div>
+                                <button id="log-interview-btn" class="btn-primary">
+                                    <i class="fa-solid fa-check"></i> Log Interview Practice
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= 5. STUDY PLANNER VIEW ================= -->
+                <section id="planner" class="view-section hidden">
+                    <div class="glass" style="margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                            <div>
+                                <h2 style="font-size: 1.4rem; font-weight: 800;">Weekly Preparation Schedule</h2>
+                                <p style="color: var(--text-muted); font-size: 0.88rem;">Structure your focus days to balance DSA, Projects, Mock Interviews, and Core CS.</p>
+                            </div>
+                            <button id="add-schedule-block-btn" class="btn-primary">
+                                <i class="fa-solid fa-plus"></i> Add Study Slot
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="planner-matrix" id="planner-matrix-container">
+                        <!-- Populated by JS -->
+                    </div>
+                </section>
+
+                <!-- ================= 6. ATS RESUME AUDITOR ================= -->
+                <section id="resume" class="view-section hidden">
+                    <div class="glass" style="margin-bottom: 24px;">
+                        <h2 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 6px;">ATS Resume & Portfolio Quality Score</h2>
+                        <p style="color: var(--text-muted); font-size: 0.88rem;">Audit your resume against Fortune 500 recruiter ATS screening criteria.</p>
+                        
+                        <div class="ats-score-meter" style="margin-top: 20px;">
+                            <div class="ats-metric-box">
+                                <div class="ats-score-number" id="ats-score-display">85%</div>
+                                <span style="font-size: 0.8rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted);">ATS Compatibility</span>
+                            </div>
+                            <div style="flex: 1;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 6px;">Resume Benchmark Assessment</h4>
+                                <p style="font-size: 0.88rem; color: var(--text-muted);" id="ats-assessment-text">Your resume format has strong fundamentals. Complete the pending bullet points below to reach the top 5% interview callback tier.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ats-criteria-grid" id="ats-checklist-container">
+                        <!-- Populated dynamically by JS -->
+                    </div>
+                </section>
+
+                <!-- ================= 7. PROFILE & GOALS VIEW ================= -->
+                <section id="profile" class="view-section hidden">
+                    <div class="dashboard-grid">
+                        <div class="glass col-span-6">
+                            <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 16px;"><i class="fa-solid fa-id-badge" style="color: var(--primary-light);"></i> Academic Profile</h3>
+                            <form id="profile-form" style="display: flex; flex-direction: column; gap: 14px;">
+                                <div>
+                                    <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Full Name</label>
+                                    <input type="text" id="prof-name" class="search-input" placeholder="E.g. Alex Johnson" style="width: 100%;">
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Degree & Branch</label>
+                                    <input type="text" id="prof-degree" class="search-input" placeholder="E.g. B.Tech Computer Science & Engineering" style="width: 100%;">
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Current GPA / Percentage</label>
+                                    <input type="text" id="prof-gpa" class="search-input" placeholder="E.g. 8.9 / 10.0" style="width: 100%;">
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="glass col-span-6">
+                            <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 16px;"><i class="fa-solid fa-bullseye" style="color: var(--accent-cyan);"></i> Placement Objectives</h3>
+                            <form id="goals-form" style="display: flex; flex-direction: column; gap: 14px;">
+                                <div>
+                                    <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Primary Career Domain</label>
+                                    <select id="goal-path" class="category-filter-select" style="width: 100%;">
+                                        <option value="Software Engineer">Software Engineer (Full Stack / Backend)</option>
+                                        <option value="AI & ML Engineer">AI & Machine Learning Engineer</option>
+                                        <option value="Data Scientist">Data Scientist</option>
+                                        <option value="DevOps & Cloud">Cloud & DevOps Architect</option>
+                                        <option value="Product Manager">Product Manager</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Dream Companies / Role Target</label>
+                                    <input type="text" id="goal-role" class="search-input" placeholder="E.g. SDE-1 @ Google, Microsoft, Amazon" style="width: 100%;">
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Placement Drive Timeline</label>
+                                    <input type="month" id="goal-timeline" class="search-input" style="width: 100%;">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="glass" style="margin-top: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+                        <div>
+                            <button id="save-profile-btn" class="btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+                            <span id="save-status" style="margin-left: 14px; font-size: 0.88rem; color: var(--accent-emerald);" class="hidden"><i class="fa-solid fa-check"></i> Profile saved successfully!</span>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button id="export-data-btn" class="btn-outline"><i class="fa-solid fa-download"></i> Backup JSON</button>
+                            <input type="file" id="import-data-file" accept=".json" style="display: none;">
+                            <button id="import-data-btn" class="btn-outline"><i class="fa-solid fa-upload"></i> Restore JSON</button>
+                            <button id="reset-sample-btn" class="btn-outline" style="color: var(--accent-rose); border-color: rgba(244, 63, 94, 0.3);"><i class="fa-solid fa-rotate-left"></i> Reset Demo Data</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= 8. ANALYTICS & BADGES VIEW ================= -->
+                <section id="analytics" class="view-section hidden">
+                    <div class="dashboard-grid">
+                        <!-- Streaks & Velocity -->
+                        <div class="glass col-span-4">
+                            <div class="stat-card-header">
+                                <span class="stat-card-title">Preparation Velocity</span>
+                                <div class="stat-card-icon icon-emerald"><i class="fa-solid fa-gauge-high"></i></div>
+                            </div>
+                            <div class="stat-metric-value" id="analytics-current-streak">0 <span style="font-size: 1.1rem; color: var(--text-muted);">Days Current</span></div>
+                            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">Longest record: <strong id="analytics-longest-streak" style="color: var(--text-main);">0 days</strong></p>
+                        </div>
+
+                        <!-- Unlocked Trophies -->
+                        <div class="glass col-span-8">
+                            <div class="stat-card-header">
+                                <span class="stat-card-title">Unlocked Placement Badges & Trophies</span>
+                                <div class="stat-card-icon icon-amber"><i class="fa-solid fa-trophy"></i></div>
+                            </div>
+                            <ul class="goal-list" id="achievements-list" style="list-style: none; display: flex; flex-wrap: wrap; gap: 10px;">
+                                <!-- Dynamically populated badges -->
+                            </ul>
+                        </div>
+
+                        <!-- 14-Day Activity Velocity Chart -->
+                        <div class="glass col-span-12">
+                            <div class="stat-card-header">
+                                <span class="stat-card-title">14-Day Activity & Learning Momentum</span>
+                                <div class="stat-card-icon icon-cyan"><i class="fa-solid fa-chart-area"></i></div>
+                            </div>
+                            <div style="height: 260px; position: relative;">
+                                <canvas id="velocityTrendChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Full Activity Audit Log -->
+                        <div class="glass col-span-12">
+                            <div class="stat-card-header">
+                                <span class="stat-card-title">Comprehensive Preparation Timeline</span>
+                                <div class="stat-card-icon icon-purple"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                            </div>
+                            <ul class="activity-timeline" id="full-history-timeline" style="list-style: none; display: flex; flex-direction: column; gap: 14px;">
+                                <!-- Dynamically populated -->
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal: Roadmap Node Detail / Action -->
+    <div class="modal-overlay" id="node-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-node-title" style="font-size: 1.25rem; font-weight: 700;">Milestone Overview</h3>
+                <button class="modal-close" id="modal-close-btn">&times;</button>
+            </div>
+            <div style="margin-bottom: 16px;">
+                <p id="modal-node-desc" style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.5; margin-bottom: 12px;"></p>
+                <div style="background: var(--bg-surface-elevated); padding: 14px; border-radius: 12px; margin-bottom: 14px;">
+                    <h4 style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: 6px;">Key Curriculum Topics:</h4>
+                    <ul id="modal-node-topics" style="padding-left: 20px; font-size: 0.88rem; color: var(--text-main);"></ul>
+                </div>
+                <div>
+                    <h4 style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--accent-emerald); margin-bottom: 6px;">Curated Free Resources:</h4>
+                    <ul id="modal-node-resources" style="padding-left: 20px; font-size: 0.88rem; color: var(--primary-light);"></ul>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button id="modal-add-tasks-btn" class="btn-primary"><i class="fa-solid fa-plus"></i> Add Topics to Checklist</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Outlet -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Application Script -->
+    <script src="script.js"></script>
+</body>
+</html>
